@@ -1,0 +1,24 @@
+{
+    "name": "gfonseca/phpfcm",
+    "description": "PHP API for Firebase cloud message",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Georgio Barbosa",
+            "email": "georgio.barbosa@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">5.6"
+    },
+    "require-dev": {
+        "codeception/codeception": "*",
+        "codeception/aspect-mock": "^0.5.3",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPFCM\\": "src"
+        }
+    }
+}

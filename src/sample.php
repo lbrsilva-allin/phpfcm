@@ -1,15 +1,10 @@
-# phpfcm
-
-## PHP API for Firebase cloud message
-
-```php
 <?php
 include __DIR__."/../vendor/autoload.php";
 
 define("CONCURRENCY", 50);
 define("ACCESS_TOKEN", "google_access_token");
 
-$client_list; // <=list of clients loaded from database
+$client_list; // <= Loaded a list of clients from database
 
 $pack = PHPFCM\FCMClient::makeNotificationPool(
     function($client){
@@ -24,7 +19,7 @@ $pack = PHPFCM\FCMClient::makeNotificationPool(
             )
         );
     },
-    $client_list
+    range(0,1)
 );
 
 $fcm = new PHPFCM\FCMClient(
@@ -38,4 +33,3 @@ foreach($response as $r) {
     echo $r->getMessageID();
     echo "\n";
 }
-```
