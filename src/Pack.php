@@ -32,7 +32,7 @@ class Pack
     * @param string $key Authorization key
     * @return \Generator
     */
-    public function getGeneratorPack(string $key)
+    public function getGeneratorPack($key)
     {
         $header = array(
             "Authorization" => "key=$key",

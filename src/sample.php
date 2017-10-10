@@ -27,7 +27,7 @@ $fcm = new PHPFCM\FCMClient(
     CONCURRENCY
 );
 
-$response = $fcm->sendPack($pack)[""];
+$response = $fcm->sendPack($pack)["response"];
 
 foreach($response as $r) {
     echo $r->getMessageID();

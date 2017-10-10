@@ -11,6 +11,7 @@ define("ACCESS_TOKEN", "google_access_token");
 
 $client_list; // <=list of clients loaded from database
 
+// You also can use PHPFCM\FCMClient::makeMessagePool()
 $pack = PHPFCM\FCMClient::makeNotificationPool(
     function($client){
         return array(
@@ -32,7 +33,7 @@ $fcm = new PHPFCM\FCMClient(
     CONCURRENCY
 );
 
-$response = $fcm->sendPack($pack)[""];
+$response = $fcm->sendPack($pack);
 
 foreach($response as $r) {
     echo $r->getMessageID();
