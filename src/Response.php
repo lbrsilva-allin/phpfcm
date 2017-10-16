@@ -45,7 +45,7 @@ class Response {
     /**
     * @param string $response The json response
     */
-    public function __construct(string $response, Message $message = null)
+    public function __construct($response, Message $message = null)
     {
         $this->message = $message;
         $this->response_array = json_decode($response, true);
