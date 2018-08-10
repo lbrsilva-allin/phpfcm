@@ -66,6 +66,12 @@ class Message
     private $dry_run = null;
 
     /**
+    * set an id that can be used to recover the message response
+    * @var Bool $dry_run Dry run
+    */
+    private $id = null;
+
+    /**
     * The options for the api
     */
     private $message_options = array();
@@ -81,11 +87,12 @@ class Message
     * @param string $to The client address
     * @param array $data the data fiels
     */
-    public function __construct($to, array $payload, $message_options = array())
+    public function __construct($to, array $payload, $message_options = array(), $id=null)
     {
         $this->to = $to;
         $this->payload = $payload;
         $this->message_options = $message_options;
+        $this->id = $id;
     }
 
     public function getColapseKey()
@@ -131,6 +138,17 @@ class Message
     {
         return $this->to;
     }
+
+    public function getID()
+    {
+        return $this->id;
+    }
+
+    public function setID(bool $id)
+    {
+        $this->id = $id;
+    }
+
 
     public function setColapseKey(bool $val)
     {

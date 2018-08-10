@@ -4,6 +4,7 @@ namespace PHPFCM;
 
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise;
 
 /**
 * FCMClient works as an facade for the rest of the whole lib
@@ -63,6 +64,24 @@ class FCMClient
     }
 
     /**
+    * Open a connection with fmc and paralel send the pack
+    * @return Array <PHPFCM\FCMResponse>
+    * @param
+    */
+    public function sendAsync(Pack $pack)
+    {
+        $client = new Client([
+            'base_uri' => self::END_POINT,
+        ]);
+
+        $gen = $pack->getGeneratorPromise($this->auth_key, $client);
+        $results = Promise\unwrap($gen);
+        $results = Promise\settle($gen)->wait();
+
+        return $results;
+    }
+
+    /**
     * Build the GuzzleClient Object
     * @param Function $fulfiled Function for the 200 response requisitions
     * @param Function $rejected Function for the negative responses
@@ -94,7 +113,8 @@ class FCMClient
                 new Notification(
                     $m['to'],
                     $m['notification'],
-                    $m['message_options']
+                    $m['message_options'],
+                    $m['id']
                 )
             );
         }

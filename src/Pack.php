@@ -1,6 +1,8 @@
 <?php
 namespace PHPFCM;
 
+use GuzzleHttp\Client;
+
 /**
 * This class has the responsability to pack the messages in a PHP Generator
 * @author Georgio Barbosa da Fonseca <georgio.barbosa@gmail.com>
@@ -40,8 +42,8 @@ class Pack
         );
 
         $gen = function () use($header){
-            foreach ($this->load as $message) {
-                yield new \GuzzleHttp\Psr7\Request(
+            foreach ($this->load as $key => $message) {
+                yield $message->getID() => new \GuzzleHttp\Psr7\Request(
                     'POST',
                     FCMClient::END_POINT,
                     $header,
@@ -51,5 +53,28 @@ class Pack
         };
 
         return $gen();
+    }
+
+    public function getGeneratorPromise($key, Client $client)
+    {
+        $header = array(
+            "Authorization" => "key=$key",
+            "Content-Type" => "application/json"
+        );
+
+        $promises = [];
+        
+        foreach ($this->load as $key => $message) {
+            $promises[$message->getID()]  = $client->requestAsync(
+                'POST',
+                FCMClient::END_POINT,
+                [
+                    "headers" => $header,
+                    "body" => $message->render()
+                ]
+            );
+        }
+
+        return $promises;
     }
 }
