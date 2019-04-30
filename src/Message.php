@@ -214,11 +214,6 @@ class Message
         return $msg;
     }
 
-    protected function buildPayload()
-    {
-        return $this->payload;
-    }
-
     protected function getPayloadName()
     {
         return "data";
@@ -230,7 +225,7 @@ class Message
     public function render()
     {
         $msg = $this->buildMessageArray();
-        $msg[$this->getPayloadName()] = $this->buildPayload();
+        $msg[$this->getPayloadName()] = $this->getPayload();
         return json_encode($msg);
     }
 
